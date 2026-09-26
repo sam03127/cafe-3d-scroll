@@ -64,9 +64,10 @@ export default function NightlifeBento() {
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: "1fr 1fr 1fr 1fr",
+        gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
         gridTemplateRows: "290px 290px 220px",
         gap: "10px",
+        width: "100%",
       }}
     >
       {CARDS.map((card, i) => (
@@ -81,9 +82,10 @@ export default function NightlifeBento() {
             overflow: "hidden",
             position: "relative",
             cursor: "pointer",
+            minWidth: 0,
           }}
         >
-          {/* Image */}
+          {/* IMAGE */}
           <img
             src={card.img}
             alt={card.label}
@@ -95,11 +97,12 @@ export default function NightlifeBento() {
               transform:
                 hovered === i ? "scale(1.06)" : "scale(1)",
               transition:
-                "transform 0.55s cubic-bezier(0.4,0,0.2,1)",
+                "transform 0.55s cubic-bezier(0.4, 0, 0.2, 1)",
+              display: "block",
             }}
           />
 
-          {/* Base dark gradient */}
+          {/* DARK GRADIENT */}
           <div
             style={{
               position: "absolute",
@@ -109,10 +112,11 @@ export default function NightlifeBento() {
                   ? "linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%)"
                   : "linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 55%)",
               transition: "background 0.4s ease",
+              pointerEvents: "none",
             }}
           />
 
-          {/* Purple tint on hover */}
+          {/* PURPLE HOVER TINT */}
           <div
             style={{
               position: "absolute",
@@ -121,15 +125,17 @@ export default function NightlifeBento() {
                 "linear-gradient(135deg, rgba(99,60,180,0.28) 0%, transparent 60%)",
               opacity: hovered === i ? 1 : 0,
               transition: "opacity 0.4s ease",
+              pointerEvents: "none",
             }}
           />
 
-          {/* Label */}
+          {/* LABEL */}
           <span
             style={{
               position: "absolute",
               bottom: hovered === i ? 56 : 16,
               left: 16,
+              right: 16,
               color: "#fff",
               fontFamily: "var(--font-sans)",
               fontSize: "10px",
@@ -138,12 +144,13 @@ export default function NightlifeBento() {
               textTransform: "uppercase",
               opacity: 0.9,
               transition: "bottom 0.3s ease",
+              zIndex: 5,
             }}
           >
             {card.label}
           </span>
 
-          {/* Description — slides in on hover */}
+          {/* DESCRIPTION */}
           <div
             style={{
               position: "absolute",
@@ -157,6 +164,7 @@ export default function NightlifeBento() {
                   : "translateY(12px)",
               transition:
                 "opacity 0.35s ease 0.05s, transform 0.35s ease 0.05s",
+              zIndex: 4,
             }}
           >
             <p
@@ -172,7 +180,7 @@ export default function NightlifeBento() {
             </p>
           </div>
 
-          {/* Top-right arrow — appears on hover */}
+          {/* ARROW */}
           <div
             style={{
               position: "absolute",
@@ -194,12 +202,14 @@ export default function NightlifeBento() {
                   : "scale(0.7)",
               transition:
                 "opacity 0.3s ease, transform 0.3s ease",
+              zIndex: 6,
             }}
           >
             <span
               style={{
                 color: "#fff",
                 fontSize: "13px",
+                lineHeight: 1,
               }}
             >
               ↗
@@ -207,18 +217,6 @@ export default function NightlifeBento() {
           </div>
         </div>
       ))}
-
-      <style>{`
-        @keyframes nightlife-label-up {
-          from {
-            transform: translateY(0);
-          }
-
-          to {
-            transform: translateY(-8px);
-          }
-        }
-      `}</style>
     </div>
   );
 }
