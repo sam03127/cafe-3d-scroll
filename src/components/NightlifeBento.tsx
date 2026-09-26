@@ -1,4 +1,3 @@
-```tsx
 "use client";
 
 import { useState } from "react";
@@ -61,163 +60,153 @@ export default function NightlifeBento() {
   const [hovered, setHovered] = useState<number | null>(null);
 
   return (
-    <div
+    <section
       style={{
+        width: "100%",
         display: "grid",
         gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
         gridTemplateRows: "290px 290px 220px",
         gap: "10px",
-        width: "100%",
       }}
     >
-      {CARDS.map((card, i) => (
-        <div
-          key={i}
-          onMouseEnter={() => setHovered(i)}
-          onMouseLeave={() => setHovered(null)}
-          style={{
-            gridColumn: card.gridColumn,
-            gridRow: card.gridRow,
-            borderRadius: "20px",
-            overflow: "hidden",
-            position: "relative",
-            cursor: "pointer",
-            minWidth: 0,
-          }}
-        >
-          {/* IMAGE */}
-          <img
-            src={card.img}
-            alt={card.label}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              objectPosition: card.objectPosition,
-              transform:
-                hovered === i ? "scale(1.06)" : "scale(1)",
-              transition:
-                "transform 0.55s cubic-bezier(0.4, 0, 0.2, 1)",
-              display: "block",
-            }}
-          />
+      {CARDS.map((card, index) => {
+        const isHovered = hovered === index;
 
-          {/* DARK GRADIENT */}
-          <div
+        return (
+          <article
+            key={card.label}
+            onMouseEnter={() => setHovered(index)}
+            onMouseLeave={() => setHovered(null)}
             style={{
-              position: "absolute",
-              inset: 0,
-              background:
-                hovered === i
-                  ? "linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%)"
-                  : "linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 55%)",
-              transition: "background 0.4s ease",
-              pointerEvents: "none",
-            }}
-          />
-
-          {/* PURPLE HOVER TINT */}
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              background:
-                "linear-gradient(135deg, rgba(99,60,180,0.28) 0%, transparent 60%)",
-              opacity: hovered === i ? 1 : 0,
-              transition: "opacity 0.4s ease",
-              pointerEvents: "none",
-            }}
-          />
-
-          {/* LABEL */}
-          <span
-            style={{
-              position: "absolute",
-              bottom: hovered === i ? 56 : 16,
-              left: 16,
-              right: 16,
-              color: "#fff",
-              fontFamily: "var(--font-sans)",
-              fontSize: "10px",
-              fontWeight: 700,
-              letterSpacing: "0.22em",
-              textTransform: "uppercase",
-              opacity: 0.9,
-              transition: "bottom 0.3s ease",
-              zIndex: 5,
+              gridColumn: card.gridColumn,
+              gridRow: card.gridRow,
+              position: "relative",
+              overflow: "hidden",
+              minWidth: 0,
+              borderRadius: "20px",
+              cursor: "pointer",
+              background: "#111",
             }}
           >
-            {card.label}
-          </span>
+            <img
+              src={card.img}
+              alt={card.label}
+              style={{
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                objectPosition: card.objectPosition,
+                display: "block",
+                transform: isHovered ? "scale(1.06)" : "scale(1)",
+                transition:
+                  "transform 0.55s cubic-bezier(0.4, 0, 0.2, 1)",
+              }}
+            />
 
-          {/* DESCRIPTION */}
-          <div
-            style={{
-              position: "absolute",
-              bottom: 16,
-              left: 16,
-              right: 16,
-              opacity: hovered === i ? 1 : 0,
-              transform:
-                hovered === i
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: isHovered
+                  ? "linear-gradient(to top, rgba(0,0,0,0.86), rgba(0,0,0,0.25), rgba(0,0,0,0.05))"
+                  : "linear-gradient(to top, rgba(0,0,0,0.65), transparent 60%)",
+                transition: "background 0.4s ease",
+              }}
+            />
+
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background:
+                  "linear-gradient(135deg, rgba(99,60,180,0.3), transparent 60%)",
+                opacity: isHovered ? 1 : 0,
+                transition: "opacity 0.4s ease",
+              }}
+            />
+
+            <div
+              style={{
+                position: "absolute",
+                left: "16px",
+                right: "16px",
+                bottom: isHovered ? "58px" : "16px",
+                color: "#fff",
+                fontFamily: "var(--font-sans)",
+                fontSize: "10px",
+                fontWeight: 700,
+                letterSpacing: "0.22em",
+                textTransform: "uppercase",
+                transition: "bottom 0.3s ease",
+                zIndex: 3,
+              }}
+            >
+              {card.label}
+            </div>
+
+            <div
+              style={{
+                position: "absolute",
+                left: "16px",
+                right: "16px",
+                bottom: "16px",
+                opacity: isHovered ? 1 : 0,
+                transform: isHovered
                   ? "translateY(0)"
                   : "translateY(12px)",
-              transition:
-                "opacity 0.35s ease 0.05s, transform 0.35s ease 0.05s",
-              zIndex: 4,
-            }}
-          >
-            <p
-              style={{
-                color: "rgba(220,230,255,0.75)",
-                fontFamily: "var(--font-sans)",
-                fontSize: "0.72rem",
-                lineHeight: 1.7,
-                margin: 0,
+                transition:
+                  "opacity 0.35s ease, transform 0.35s ease",
+                zIndex: 3,
               }}
             >
-              {card.desc}
-            </p>
-          </div>
+              <p
+                style={{
+                  margin: 0,
+                  color: "rgba(220,230,255,0.8)",
+                  fontFamily: "var(--font-sans)",
+                  fontSize: "0.72rem",
+                  lineHeight: 1.7,
+                }}
+              >
+                {card.desc}
+              </p>
+            </div>
 
-          {/* ARROW */}
-          <div
-            style={{
-              position: "absolute",
-              top: 14,
-              right: 14,
-              width: 34,
-              height: 34,
-              borderRadius: "50%",
-              background: "rgba(255,255,255,0.12)",
-              backdropFilter: "blur(8px)",
-              border: "1px solid rgba(255,255,255,0.22)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              opacity: hovered === i ? 1 : 0,
-              transform:
-                hovered === i
-                  ? "scale(1)"
-                  : "scale(0.7)",
-              transition:
-                "opacity 0.3s ease, transform 0.3s ease",
-              zIndex: 6,
-            }}
-          >
-            <span
+            <div
               style={{
-                color: "#fff",
-                fontSize: "13px",
-                lineHeight: 1,
+                position: "absolute",
+                top: "14px",
+                right: "14px",
+                width: "34px",
+                height: "34px",
+                borderRadius: "50%",
+                background: "rgba(255,255,255,0.12)",
+                backdropFilter: "blur(8px)",
+                border: "1px solid rgba(255,255,255,0.22)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                opacity: isHovered ? 1 : 0,
+                transform: isHovered ? "scale(1)" : "scale(0.7)",
+                transition:
+                  "opacity 0.3s ease, transform 0.3s ease",
+                zIndex: 4,
               }}
             >
-              ↗
-            </span>
-          </div>
-        </div>
-      ))}
-    </div>
+              <span
+                style={{
+                  color: "#fff",
+                  fontSize: "14px",
+                }}
+              >
+                ↗
+              </span>
+            </div>
+          </article>
+        );
+      })}
+    </section>
   );
 }
-```
